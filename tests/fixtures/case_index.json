@@ -1,0 +1,9 @@
+{
+  "kind": "synthetic",
+  "warning": "These are invented prices. They are not historical market data, trades, or the decisions of any person.",
+  "cases": [
+    {"file": "short_session.csv", "symbol": "EXAMPLE", "timeframe_seconds": 60, "bars": 3, "purpose": "CSV and unit smoke test"},
+    {"file": "gap_session.csv", "symbol": "EXAMPLE", "timeframe_seconds": 60, "purpose": "Gap-through-stop accounting"},
+    {"file": "early_close.csv", "symbol": "EXAMPLE", "timeframe_seconds": 60, "purpose": "13:00 ET close"}
+  ]
+}

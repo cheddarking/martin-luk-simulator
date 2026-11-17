@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Replay the decision — Replay Lab</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/chart.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body data-view="home">
+  <div class="app-shell">
+    <header class="masthead">
+      <a class="wordmark" href="/" aria-label="Replay Lab home">Replay Lab<span class="wordmark-glyph" aria-hidden="true">/</span></a>
+      <span class="masthead-note">Offline strategy simulator</span>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <h1 id="page-title">Replay the decision</h1>
+          <p>{{ subtitle }}</p>
+          <p class="disclosure">Real cached daily stock prices, mechanical decisions and modeled fills. A chart is not a record of anyone’s personal trades or investment advice.</p>
+        </div>
+        <div class="intro-actions">
+          <div id="history-empty">
+            <h2>Add private daily prices</h2>
+            <p>Point the local server at a folder of historical ticker CSVs. Price files stay outside the public project.</p>
+            <p class="hint">Run <code>luk-replay serve --source-dir /path/to/private/history</code>. The app makes no network requests.</p>
+          </div>
+          <form id="history-ready" hidden>
+            <label for="history-symbol">Stock or index fund</label>
+            <input id="history-symbol" name="symbol" list="history-symbols" required autocomplete="off" spellcheck="false" aria-describedby="coverage-note">
+            <datalist id="history-symbols"></datalist>
+            <p id="coverage-note" class="hint">Select a ticker already stored in your private cache.</p>
+            <div class="date-controls">
+              <label for="start-date">First trading day <input id="start-date" name="start" type="date"></label>
+              <label for="end-date">Last trading day <input id="end-date" name="end" type="date"></label>
+            </div>
+            <button id="load-history" class="primary" type="submit">Replay daily history</button>
+            <p class="hint">Prices are historical. Entries, stops and P&amp;L are modeled, not actual broker fills.</p>
+          </form>
+        </div>
+      </section>
+      <div id="notice" class="notice" role="status" aria-live="polite"></div>
+      <section id="run-view" class="workspace" hidden aria-labelledby="run-heading">
+        <div class="workspace-head">
+          <div>
+            <h2 id="run-heading">Session evidence</h2>
+            <p id="source-kind" class="hint"></p>
+          </div>
+          <div id="summary" class="summary-list" aria-label="Replay summary"></div>
+        </div>
+        <div class="workspace-grid">
+          <section class="chart-panel" aria-labelledby="chart-title">
+            <div class="panel-heading">
+              <h3 id="chart-title">Daily close · USD</h3>
+              <span id="chart-range" class="hint"></span>
+            </div>
+            <div class="chart-frame">
+              <svg id="price-chart" role="img" aria-label="Observed close over the imported session" viewBox="0 0 800 270" preserveAspectRatio="none"></svg>
+              <div id="chart-tooltip" class="chart-tooltip" role="status" hidden></div>
+            </div>
+            <details class="data-details">
+              <summary>See the price observations as a table</summary>
+              <div class="table-scroll">
+                <table aria-label="Price observations">
+                  <caption>Price observations available to the replay</caption>
+                  <thead><tr><th scope="col">Time</th><th scope="col">Open</th><th scope="col">High</th><th scope="col">Low</th><th scope="col">Close</th><th scope="col">Volume</th></tr></thead>
+                  <tbody id="price-rows"></tbody>
+                </table>
+              </div>
+            </details>
+          </section>
+          <section class="decision-panel" aria-labelledby="decisions-title">
+            <div class="panel-heading"><h3 id="decisions-title">What the rules saw</h3><span id="decision-count" class="hint"></span></div>
+            <ol id="decisions" class="decision-list"></ol>
+          </section>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="method-title">
+        <h2 id="method-title">A replay, not a prediction</h2>
+        <p>The rules act on completed daily bars. A signal made at the close may fill no earlier than the next trading day's open. Daily OHLC does not reveal intraday price order; ambiguous stops take priority. Provider adjustments and broker spreads are assumptions, not historical executions.</p>
+      </section>
+    </main>
+    <footer>Replay Lab · Local files and local browser only · No broker connection</footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>Recorded replay — Replay Lab</title><link rel="stylesheet" href="/static/styles.css"><script src="/static/chart.js" defer></script><script src="/static/app.js" defer></script></head>
+<body data-view="recorded" data-run-id="{{ run_id }}">
+<div class="app-shell">
+<header class="masthead"><a class="wordmark" href="/">Replay Lab<span class="wordmark-glyph" aria-hidden="true">/</span></a><span class="masthead-note">Saved offline run</span></header>
+<main class="recorded-layout">
+<a class="back-link" href="/">Return to inspector</a>
+<h1>Recorded replay</h1>
+<p class="hint">{{ summary.symbol }} · {{ summary.strategy_version }} · {{ summary.timeframe | default('minute') }} · {{ run_id }}</p>
+<p class="hint">Price source: {{ summary.source_kind | default('unknown') }} · adjustment: {{ summary.adjustment | default('unknown') }}. Modeled fills are not broker executions.</p>
+<div class="summary-list" aria-label="Recorded run summary"><div><span>Decisions</span><strong>{{ summary.decisions }}</strong></div><div><span>Entries</span><strong>{{ summary.entries }}</strong></div><div><span>Exits</span><strong>{{ summary.exits }}</strong></div><div><span>Net result</span><strong>£{{ summary.net_pnl_gbp }}</strong></div></div>
+<section class="chart-panel" aria-labelledby="chart-title"><div class="panel-heading"><h2 id="chart-title">Observed close · USD</h2></div><div class="chart-frame"><svg id="price-chart" role="img" aria-label="Recorded close observations" viewBox="0 0 800 270" preserveAspectRatio="none"></svg><div id="chart-tooltip" class="chart-tooltip" role="status" hidden></div></div><details class="data-details"><summary>See the price observations as a table</summary><div class="table-scroll"><table aria-label="Price observations"><caption>Recorded price observations</caption><thead><tr><th>Time</th><th>Close</th></tr></thead><tbody id="price-rows"></tbody></table></div></details></section>
+<section class="decision-panel" aria-labelledby="audit-heading"><div class="panel-heading"><h2 id="audit-heading">Decision trail</h2></div><ol id="decisions" class="decision-list"></ol></section>
+<div id="notice" class="notice" role="status" aria-live="polite"></div>
+</main><footer>Saved run is an audit record, not trading advice.</footer></div></body></html>
